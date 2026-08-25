@@ -4,52 +4,38 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <title>Game Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-</head>
+<title>Game Demo</title>
 
-<body>
+<style>
 
-  <h1>🎮 Game Demo</h1>
+* {
 
-  <p>Số dư: <span id="balance">1000</span> xu</p>
+  box-sizing: border-box;
 
-  <button id="play">Chơi</button>
+}
 
-  <p id="result"></p>
+body {
 
-  <script>
+  margin: 0;
 
-    let balance = 1000;
+  font-family: Arial, sans-serif;
 
-    document.getElementById("play").onclick = function () {
+  background: #090d18;
 
-      if (Math.random() > 0.5) {
+  color: white;
 
-        balance += 100;
+}
 
-        document.getElementById("result").textContent =
+.app {
 
-          "🎉 Bạn thắng 100 xu!";
+  max-width: 430px;
 
-      } else {
+  min-height: 100vh;
 
-        balance -= 50;
+  margin: auto;
 
-        document.getElementById("result").textContent =
-
-          "😢 Bạn thua 50 xu!";
-
-      }
-
-      document.getElementById("balance").textContent = balance;
-
-    };
-
-  </script>
-
-</body>
-
-</html>
+  background: linear-gradient(#151b31, #080b14);
