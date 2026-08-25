@@ -2,421 +2,248 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Center</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neon Game Hub</title>
 <style>
 *{box-sizing:border-box}
-
 body{
-  margin:0;
-  background:#080b14;
-  color:#fff;
-  font-family:Arial,sans-serif;
+ margin:0;background:radial-gradient(circle at top,#29145b,#080713 65%);
+ color:#fff;font-family:Arial,sans-serif;min-height:100vh
 }
-
-.app{
-  max-width:430px;
-  min-height:100vh;
-  margin:auto;
-  background:linear-gradient(#111832,#070a12);
+.app{max-width:600px;margin:auto;padding:16px}
+header{text-align:center;padding:12px}
+.logo{font-size:30px;font-weight:900;color:#fff;text-shadow:0 0 15px #b14cff}
+.logo span{color:#ffcf40}
+.balance{
+ background:#151026;border:1px solid #7946d8;border-radius:16px;
+ padding:13px 17px;display:flex;justify-content:space-between;
+ margin:10px 0 16px
 }
-
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px;
-  background:#151d38;
+.balance b{color:#ffd43b;font-size:20px}
+.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nav button{
+ background:#171127;color:#aaa;border:1px solid #40305e;
+ padding:11px 4px;border-radius:13px;font-weight:bold
 }
-
-.logo{
-  font-size:20px;
-  font-weight:bold;
+.nav button.active{background:linear-gradient(135deg,#7c3aed,#ec4899);color:white}
+.page{display:none;margin-top:14px}
+.page.active{display:block}
+.card{
+ background:linear-gradient(145deg,#21143e,#0d0a18);
+ border:1px solid #6d42b7;border-radius:22px;padding:16px;
+ box-shadow:0 0 25px #4b1b8225
 }
-
-.coins{
-  color:#ffd83d;
-  background:#252e4d;
-  padding:8px 12px;
-  border-radius:20px;
+h2{text-align:center;margin:4px 0 15px}
+.reels{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+ background:#05040a;padding:10px;border-radius:15px
 }
-
-.banner{
-  margin:15px;
-  padding:25px 15px;
-  text-align:center;
-  border-radius:18px;
-  background:linear-gradient(135deg,#6d28d9,#db2777);
+.reel{
+ height:68px;background:#171126;border-radius:10px;
+ display:grid;place-items:center;font-size:34px
 }
-
-.banner h2{
-  margin:5px;
+.spin{
+ width:100%;margin-top:14px;padding:15px;border:0;border-radius:14px;
+ color:white;font-size:18px;font-weight:bold;
+ background:linear-gradient(135deg,#ec4899,#7c3aed);
+ box-shadow:0 0 18px #b33cff66
 }
-
-.categories{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  padding:15px;
+.msg{text-align:center;min-height:28px;margin:12px 0;color:#ffd84d}
+.fish{
+ position:relative;height:310px;overflow:hidden;border-radius:18px;
+ background:linear-gradient(#071c3c,#03244a);
+ border:1px solid #1585bd
 }
-
-.game{
-  padding:22px 10px;
-  text-align:center;
-  border-radius:16px;
-  background:#19213b;
-  border:1px solid #303a5c;
-}
-
-.game .icon{
-  font-size:45px;
-}
-
-.game button{
-  margin-top:10px;
-}
-
-button{
-  border:0;
-  color:#fff;
-  font-weight:bold;
-  padding:11px 18px;
-  border-radius:22px;
-  background:linear-gradient(90deg,#f59e0b,#ef4444);
-}
-
-.content{
-  padding:0 15px 80px;
-}
-
-.panel{
-  display:none;
-  background:#171e34;
-  border-radius:18px;
-  padding:20px;
-  text-align:center;
-}
-
-.panel.active{
-  display:block;
-}
-
-.slots{
-  margin:20px 0;
-  padding:25px 5px;
-  border-radius:15px;
-  background:#080c18;
-  font-size:48px;
-}
-
-.cards{
-  margin:20px 0;
-  font-size:55px;
-}
-
-.result{
-  min-height:25px;
-  margin-top:15px;
-  color:#ffd83d;
-}
-
-.history{
-  margin-top:20px;
-  text-align:left;
-  color:#cbd5e1;
-  font-size:14px;
-}
-
-nav{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:430px;
-  display:flex;
-  justify-content:space-around;
-  padding:11px 5px;
-  background:#151c33;
-  border-top:1px solid #303a5c;
-}
-
-nav button{
-  background:transparent;
-  padding:5px;
-  font-size:13px;
-}
-
+.fish span{position:absolute;font-size:38px;cursor:pointer;user-select:none}
+.info{text-align:center;color:#aaa;font-size:13px;margin-top:10px}
+table{width:100%;border-collapse:collapse}
+td{padding:12px;border-bottom:1px solid #29213c}
+td:last-child{text-align:right;color:#ffd43b}
+.badge{color:#ffd43b}
 </style>
 </head>
-
 <body>
 
 <div class="app">
 
 <header>
-  <div class="logo">🎮 GAME CENTER</div>
-  <div class="coins">💰 <span id="coins">1000</span></div>
+ <div class="logo">⚡ NEON <span>GAME</span></div>
+ <div class="info">Cổng game giải trí • XU ẢO</div>
 </header>
 
-<div class="banner">
-  <h2>🔥 KHU GIẢI TRÍ 🔥</h2>
-  <p>Chơi vui bằng xu ảo</p>
+<div class="balance">
+ <span>🪙 Số dư</span>
+ <b id="coins">10000</b>
 </div>
 
-<div class="categories">
-
-  <div class="game">
-    <div class="icon">🎰</div>
-    <h3>QUAY HŨ</h3>
-    <button onclick="openGame('slot')">CHƠI</button>
-  </div>
-
-  <div class="game">
-    <div class="icon">🃏</div>
-    <h3>ĐÁNH BÀI</h3>
-    <button onclick="openGame('card')">CHƠI</button>
-  </div>
-
-  <div class="game">
-    <div class="icon">🎯</div>
-    <h3>MINI GAME</h3>
-    <button onclick="miniGame()">CHƠI</button>
-  </div>
-
-  <div class="game">
-    <div class="icon">🏆</div>
-    <h3>XẾP HẠNG</h3>
-    <button onclick="ranking()">XEM</button>
-  </div>
-
-</div>
-
-<div class="content">
-
-  <div id="slot" class="panel">
-
-    <h2>🎰 QUAY HŨ</h2>
-
-    <div class="slots" id="slots">
-      🍒 ⭐ 🍋
-    </div>
-
-    <button onclick="spin()">QUAY</button>
-
-    <div class="result" id="slotResult"></div>
-
-  </div>
-
-
-  <div id="card" class="panel">
-
-    <h2>🃏 ĐÁNH BÀI</h2>
-
-    <div class="cards" id="cards">
-      🂠 🂠
-    </div>
-
-    <button onclick="drawCard()">CHIA BÀI</button>
-
-    <div class="result" id="cardResult"></div>
-
-  </div>
-
-
-  <div id="history" class="panel">
-
-    <h2>📜 LỊCH SỬ</h2>
-
-    <div id="historyText">
-      Chưa có lượt chơi.
-    </div>
-
-  </div>
-
-</div>
-
-<nav>
-  <button onclick="home()">🏠<br>Trang chủ</button>
-  <button onclick="openGame('slot')">🎮<br>Trò chơi</button>
-  <button onclick="historyPage()">📜<br>Lịch sử</button>
-  <button onclick="profile()">👤<br>Tôi</button>
+<nav class="nav">
+ <button class="active" onclick="showPage('slot',this)">🎰 Nổ Hũ</button>
+ <button onclick="showPage('fish',this)">🐟 Bắn Cá</button>
+ <button onclick="showPage('rank',this)">🏆 BXH</button>
 </nav>
 
+<section id="slot" class="page active">
+ <div class="card">
+  <h2>🎰 NEON JACKPOT</h2>
+
+  <div class="reels">
+   <div class="reel">🍒</div>
+   <div class="reel">🍋</div>
+   <div class="reel">💎</div>
+   <div class="reel">🔔</div>
+   <div class="reel">7️⃣</div>
+  </div>
+
+  <div class="msg" id="slotMsg">Sẵn sàng chưa? ✨</div>
+  <button class="spin" id="spinBtn" onclick="spin()">QUAY 🎰</button>
+
+  <div class="info">Mỗi lượt: 100 xu ảo</div>
+ </div>
+</section>
+
+<section id="fish" class="page">
+ <div class="card">
+  <h2>🐟 NEON FISH</h2>
+
+  <div class="fish" id="fishTank"></div>
+
+  <div class="msg" id="fishMsg">Chạm vào cá để nhận xu!</div>
+  <div class="info">Cá nhỏ +50 • Cá lớn +200 xu ảo</div>
+ </div>
+</section>
+
+<section id="rank" class="page">
+ <div class="card">
+  <h2>🏆 BẢNG XẾP HẠNG</h2>
+
+  <table>
+   <tr><td>🥇 NeonKing</td><td>125,800</td></tr>
+   <tr><td>🥈 Galaxy</td><td>98,450</td></tr>
+   <tr><td>🥉 Shadow</td><td>76,200</td></tr>
+   <tr><td>⭐ Bạn</td><td id="myRank">10,000</td></tr>
+  </table>
+ </div>
+</section>
+
 </div>
 
-
 <script>
+let coins=10000;
+const symbols=["🍒","🍋","🔔","💎","7️⃣"];
+const reels=[...document.querySelectorAll(".reel")];
 
-let coins = 1000;
-
-const symbols = ["🍒","🍋","⭐","💎","7️⃣"];
-
-function updateCoins(){
-  document.getElementById("coins").textContent = coins;
+function update(){
+ document.getElementById("coins").textContent=coins.toLocaleString();
+ document.getElementById("myRank").textContent=coins.toLocaleString();
 }
 
-function hidePanels(){
-  document.querySelectorAll(".panel")
-    .forEach(p => p.classList.remove("active"));
-}
+function showPage(id,btn){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
 
-function openGame(game){
+ document.querySelectorAll(".nav button")
+ .forEach(x=>x.classList.remove("active"));
 
-  hidePanels();
+ btn.classList.add("active");
 
-  document.getElementById(game)
-    .classList.add("active");
-
-  window.scrollTo({
-    top:document.body.scrollHeight,
-    behavior:"smooth"
-  });
-}
-
-function home(){
-
-  hidePanels();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-function addHistory(text){
-
-  const box = document.getElementById("historyText");
-
-  if(box.textContent === "Chưa có lượt chơi.")
-    box.innerHTML = "";
-
-  box.innerHTML =
-    "<p>"+text+"</p>" + box.innerHTML;
+ if(id==="fish") createFish();
 }
 
 function spin(){
+ if(coins<100){
+  document.getElementById("slotMsg").textContent="❌ Không đủ xu!";
+  return;
+ }
 
-  if(coins < 20){
+ coins-=100;
+ update();
 
-    document.getElementById("slotResult").textContent =
-      "Không đủ xu ảo.";
+ const btn=document.getElementById("spinBtn");
+ btn.disabled=true;
 
-    return;
-  }
+ reels.forEach(r=>{
+  r.style.opacity=".5";
+ });
 
-  coins -= 20;
+ document.getElementById("slotMsg").textContent="🎰 Đang quay...";
 
-  let a = symbols[Math.floor(Math.random()*symbols.length)];
-  let b = symbols[Math.floor(Math.random()*symbols.length)];
-  let c = symbols[Math.floor(Math.random()*symbols.length)];
+ let result=[];
 
-  document.getElementById("slots").textContent =
-    a+" "+b+" "+c;
-
-  if(a === b && b === c){
-
-    coins += 300;
-
-    document.getElementById("slotResult").textContent =
-      "🎉 JACKPOT! +300 xu ảo";
-
-    addHistory("🎰 Quay hũ: +300 xu");
-
-  }else{
-
-    document.getElementById("slotResult").textContent =
-      "😢 Không trúng. -20 xu ảo";
-
-    addHistory("🎰 Quay hũ: -20 xu");
-
-  }
-
-  updateCoins();
-}
-
-function drawCard(){
-
-  if(coins < 30){
-
-    document.getElementById("cardResult").textContent =
-      "Không đủ xu ảo.";
-
-    return;
-  }
-
-  coins -= 30;
-
-  let player =
-    Math.floor(Math.random()*13)+1;
-
-  let computer =
-    Math.floor(Math.random()*13)+1;
-
-  document.getElementById("cards").textContent =
-    "🃏 "+player+"   🃏 "+computer;
-
-  if(player > computer){
-
-    coins += 80;
-
-    document.getElementById("cardResult").textContent =
-      "🎉 Bạn thắng! +80 xu ảo";
-
-    addHistory("🃏 Đánh bài: +80 xu");
-
-  }else if(player === computer){
-
-    coins += 30;
-
-    document.getElementById("cardResult").textContent =
-      "🤝 Hòa.";
-
-    addHistory("🃏 Đánh bài: Hòa");
-
-  }else{
-
-    document.getElementById("cardResult").textContent =
-      "😢 Bạn thua. -30 xu ảo";
-
-    addHistory("🃏 Đánh bài: -30 xu");
-
-  }
-
-  updateCoins();
-}
-
-function miniGame(){
-
-  alert("🎯 Mini Game đang được phát triển!");
-}
-
-function ranking(){
-
-  alert("🏆 Bảng xếp hạng demo đang được phát triển!");
-}
-
-function historyPage(){
-
-  hidePanels();
-
-  document.getElementById("history")
-    .classList.add("active");
-
-  window.scrollTo({
-    top:document.body.scrollHeight,
-    behavior:"smooth"
+ setTimeout(()=>{
+  reels.forEach(r=>{
+   const s=symbols[Math.floor(Math.random()*symbols.length)];
+   r.textContent=s;
+   result.push(s);
+   r.style.opacity="1";
   });
+
+  let count={};
+  result.forEach(x=>count[x]=(count[x]||0)+1);
+  let max=Math.max(...Object.values(count));
+  let win=0;
+
+  if(max===5) win=10000;
+  else if(max===4) win=4000;
+  else if(max===3) win=1500;
+  else if(max===2) win=200;
+
+  if(win){
+   coins+=win;
+   document.getElementById("slotMsg").textContent=
+    "🎉 THẮNG +"+win.toLocaleString()+" xu!";
+  }else{
+   document.getElementById("slotMsg").textContent=
+    "😅 Chưa trúng, thử lại!";
+  }
+
+  update();
+  btn.disabled=false;
+ },850);
 }
 
-function profile(){
+function createFish(){
+ const tank=document.getElementById("fishTank");
+ tank.innerHTML="";
 
-  alert("👤 Tài khoản demo\n\n💰 Xu hiện tại: "+coins);
+ for(let i=0;i<9;i++){
+  const fish=document.createElement("span");
+  const big=Math.random()<.25;
+
+  fish.textContent=big?"🐠":"🐟";
+  fish.style.left=Math.random()*85+"%";
+  fish.style.top=Math.random()*80+"%";
+
+  fish.onclick=()=>{
+   const reward=big?200:50;
+   coins+=reward;
+   update();
+
+   document.getElementById("fishMsg").textContent=
+    "🎉 +"+reward+" xu ảo!";
+
+   fish.remove();
+  };
+
+  tank.appendChild(fish);
+
+  animateFish(fish);
+ }
 }
 
-updateCoins();
+function animateFish(fish){
+ let x=parseFloat(fish.style.left);
+ let direction=Math.random()<.5?1:-1;
 
+ setInterval(()=>{
+  x+=direction*.35;
+
+  if(x>88||x<2) direction*=-1;
+
+  fish.style.left=x+"%";
+ },30);
+}
+
+update();
 </script>
 
 </body>
