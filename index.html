@@ -2,105 +2,152 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Game Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Center</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   background:#080b14;
   color:#fff;
-  font-family:Arial,sans-serif
+  font-family:Arial,sans-serif;
 }
+
 .app{
   max-width:430px;
   min-height:100vh;
   margin:auto;
-  background:linear-gradient(#151a32,#080b14)
+  background:linear-gradient(#111832,#070a12);
 }
+
 header{
-  padding:16px;
   display:flex;
   justify-content:space-between;
-  background:#171d35
+  align-items:center;
+  padding:16px;
+  background:#151d38;
 }
-.logo{font-size:19px;font-weight:bold}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+
 .coins{
-  color:#ffd43b;
-  background:#252d4b;
+  color:#ffd83d;
+  background:#252e4d;
   padding:8px 12px;
-  border-radius:20px
+  border-radius:20px;
 }
+
 .banner{
   margin:15px;
-  padding:22px;
+  padding:25px 15px;
   text-align:center;
   border-radius:18px;
-  background:linear-gradient(135deg,#7224ff,#e52b8c)
+  background:linear-gradient(135deg,#6d28d9,#db2777);
 }
-.menu{
-  display:flex;
-  gap:10px;
-  padding:0 15px
+
+.banner h2{
+  margin:5px;
 }
-.menu button{
-  flex:1;
-  background:#252d49;
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:15px;
+}
+
+.game{
+  padding:22px 10px;
+  text-align:center;
+  border-radius:16px;
+  background:#19213b;
+  border:1px solid #303a5c;
+}
+
+.game .icon{
+  font-size:45px;
+}
+
+.game button{
+  margin-top:10px;
+}
+
+button{
   border:0;
-  color:white;
-  padding:12px 5px;
-  border-radius:12px
+  color:#fff;
+  font-weight:bold;
+  padding:11px 18px;
+  border-radius:22px;
+  background:linear-gradient(90deg,#f59e0b,#ef4444);
 }
-section{padding:15px}
-.card{
-  background:#171d32;
-  border:1px solid #303955;
+
+.content{
+  padding:0 15px 80px;
+}
+
+.panel{
+  display:none;
+  background:#171e34;
   border-radius:18px;
   padding:20px;
-  margin-bottom:15px;
-  text-align:center
+  text-align:center;
 }
+
+.panel.active{
+  display:block;
+}
+
 .slots{
-  font-size:48px;
-  background:#090d18;
-  padding:20px 5px;
+  margin:20px 0;
+  padding:25px 5px;
   border-radius:15px;
-  margin:15px 0
+  background:#080c18;
+  font-size:48px;
 }
-button.play{
-  border:0;
-  padding:13px 30px;
-  border-radius:25px;
-  color:#fff;
-  font-size:17px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#f59e0b,#ef4444)
+
+.cards{
+  margin:20px 0;
+  font-size:55px;
 }
+
 .result{
   min-height:25px;
-  margin-top:12px;
-  color:#ffd43b
+  margin-top:15px;
+  color:#ffd83d;
 }
-.cards{
-  font-size:55px;
-  margin:15px
-}
+
 .history{
+  margin-top:20px;
   text-align:left;
+  color:#cbd5e1;
   font-size:14px;
-  color:#cbd5e1
 }
+
 nav{
-  position:sticky;
+  position:fixed;
   bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:430px;
   display:flex;
   justify-content:space-around;
-  padding:12px;
-  background:#151b30;
-  border-top:1px solid #303955
+  padding:11px 5px;
+  background:#151c33;
+  border-top:1px solid #303a5c;
 }
-nav div{text-align:center;font-size:13px}
+
+nav button{
+  background:transparent;
+  padding:5px;
+  font-size:13px;
+}
+
 </style>
 </head>
 
@@ -109,72 +156,92 @@ nav div{text-align:center;font-size:13px}
 <div class="app">
 
 <header>
-  <div class="logo">🎮 GAME DEMO</div>
+  <div class="logo">🎮 GAME CENTER</div>
   <div class="coins">💰 <span id="coins">1000</span></div>
 </header>
 
 <div class="banner">
-  <h2>🔥 KHU GAME 🔥</h2>
-  <p>Chơi bằng xu ảo</p>
+  <h2>🔥 KHU GIẢI TRÍ 🔥</h2>
+  <p>Chơi vui bằng xu ảo</p>
 </div>
 
-<div class="menu">
-  <button onclick="show('slot')">🎰 Quay hũ</button>
-  <button onclick="show('card')">🃏 Đánh bài</button>
-</div>
+<div class="categories">
 
-<section>
+  <div class="game">
+    <div class="icon">🎰</div>
+    <h3>QUAY HŨ</h3>
+    <button onclick="openGame('slot')">CHƠI</button>
+  </div>
 
-<div class="card" id="slot">
+  <div class="game">
+    <div class="icon">🃏</div>
+    <h3>ĐÁNH BÀI</h3>
+    <button onclick="openGame('card')">CHƠI</button>
+  </div>
 
-<h2>🎰 QUAY HŨ</h2>
+  <div class="game">
+    <div class="icon">🎯</div>
+    <h3>MINI GAME</h3>
+    <button onclick="miniGame()">CHƠI</button>
+  </div>
 
-<div class="slots" id="slots">
-🍒 ⭐ 🍋
-</div>
-
-<button class="play" onclick="spin()">
-QUAY
-</button>
-
-<div class="result" id="slotResult"></div>
-
-</div>
-
-
-<div class="card" id="card" style="display:none">
-
-<h2>🃏 ĐÁNH BÀI</h2>
-
-<div class="cards" id="cards">
-🂠 🂠
-</div>
-
-<button class="play" onclick="drawCard()">
-CHIA BÀI
-</button>
-
-<div class="result" id="cardResult"></div>
+  <div class="game">
+    <div class="icon">🏆</div>
+    <h3>XẾP HẠNG</h3>
+    <button onclick="ranking()">XEM</button>
+  </div>
 
 </div>
 
+<div class="content">
 
-<div class="card">
+  <div id="slot" class="panel">
 
-<h3>📜 LỊCH SỬ</h3>
+    <h2>🎰 QUAY HŨ</h2>
 
-<div class="history" id="history">
-Chưa có lượt chơi.
+    <div class="slots" id="slots">
+      🍒 ⭐ 🍋
+    </div>
+
+    <button onclick="spin()">QUAY</button>
+
+    <div class="result" id="slotResult"></div>
+
+  </div>
+
+
+  <div id="card" class="panel">
+
+    <h2>🃏 ĐÁNH BÀI</h2>
+
+    <div class="cards" id="cards">
+      🂠 🂠
+    </div>
+
+    <button onclick="drawCard()">CHIA BÀI</button>
+
+    <div class="result" id="cardResult"></div>
+
+  </div>
+
+
+  <div id="history" class="panel">
+
+    <h2>📜 LỊCH SỬ</h2>
+
+    <div id="historyText">
+      Chưa có lượt chơi.
+    </div>
+
+  </div>
+
 </div>
-
-</div>
-
-</section>
 
 <nav>
-<div>🏠<br>Trang chủ</div>
-<div>🎮<br>Trò chơi</div>
-<div>👤<br>Tài khoản</div>
+  <button onclick="home()">🏠<br>Trang chủ</button>
+  <button onclick="openGame('slot')">🎮<br>Trò chơi</button>
+  <button onclick="historyPage()">📜<br>Lịch sử</button>
+  <button onclick="profile()">👤<br>Tôi</button>
 </nav>
 
 </div>
@@ -182,122 +249,173 @@ Chưa có lượt chơi.
 
 <script>
 
-let coins=1000;
+let coins = 1000;
 
-const symbols=["🍒","🍋","⭐","💎","7️⃣"];
+const symbols = ["🍒","🍋","⭐","💎","7️⃣"];
 
-function update(){
-  document.getElementById("coins").textContent=coins;
+function updateCoins(){
+  document.getElementById("coins").textContent = coins;
+}
+
+function hidePanels(){
+  document.querySelectorAll(".panel")
+    .forEach(p => p.classList.remove("active"));
+}
+
+function openGame(game){
+
+  hidePanels();
+
+  document.getElementById(game)
+    .classList.add("active");
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
+}
+
+function home(){
+
+  hidePanels();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 function addHistory(text){
 
-  const h=document.getElementById("history");
+  const box = document.getElementById("historyText");
 
-  if(h.textContent==="Chưa có lượt chơi.")
-    h.innerHTML="";
+  if(box.textContent === "Chưa có lượt chơi.")
+    box.innerHTML = "";
 
-  h.innerHTML="<div>"+text+"</div>"+h.innerHTML;
+  box.innerHTML =
+    "<p>"+text+"</p>" + box.innerHTML;
 }
 
 function spin(){
 
-  if(coins<20){
-    document.getElementById("slotResult").textContent=
-    "Không đủ xu ảo!";
+  if(coins < 20){
+
+    document.getElementById("slotResult").textContent =
+      "Không đủ xu ảo.";
+
     return;
   }
 
-  coins-=20;
+  coins -= 20;
 
-  let a=symbols[Math.floor(Math.random()*symbols.length)];
-  let b=symbols[Math.floor(Math.random()*symbols.length)];
-  let c=symbols[Math.floor(Math.random()*symbols.length)];
+  let a = symbols[Math.floor(Math.random()*symbols.length)];
+  let b = symbols[Math.floor(Math.random()*symbols.length)];
+  let c = symbols[Math.floor(Math.random()*symbols.length)];
 
-  document.getElementById("slots").textContent=
-  a+" "+b+" "+c;
+  document.getElementById("slots").textContent =
+    a+" "+b+" "+c;
 
-  if(a===b && b===c){
+  if(a === b && b === c){
 
-    coins+=300;
+    coins += 300;
 
-    document.getElementById("slotResult").textContent=
-    "🎉 JACKPOT! +300 xu ảo";
+    document.getElementById("slotResult").textContent =
+      "🎉 JACKPOT! +300 xu ảo";
 
-    addHistory("🎰 Thắng +300 xu");
+    addHistory("🎰 Quay hũ: +300 xu");
 
   }else{
 
-    document.getElementById("slotResult").textContent=
-    "😢 Không trúng -20 xu ảo";
+    document.getElementById("slotResult").textContent =
+      "😢 Không trúng. -20 xu ảo";
 
-    addHistory("🎰 Thua -20 xu");
+    addHistory("🎰 Quay hũ: -20 xu");
 
   }
 
-  update();
+  updateCoins();
 }
-
 
 function drawCard(){
 
-  if(coins<30){
+  if(coins < 30){
 
-    document.getElementById("cardResult").textContent=
-    "Không đủ xu ảo!";
+    document.getElementById("cardResult").textContent =
+      "Không đủ xu ảo.";
 
     return;
   }
 
-  coins-=30;
+  coins -= 30;
 
-  let player=Math.floor(Math.random()*13)+1;
-  let bot=Math.floor(Math.random()*13)+1;
+  let player =
+    Math.floor(Math.random()*13)+1;
 
-  document.getElementById("cards").textContent=
-  "🃏 "+player+"   🃏 "+bot;
+  let computer =
+    Math.floor(Math.random()*13)+1;
 
-  if(player>bot){
+  document.getElementById("cards").textContent =
+    "🃏 "+player+"   🃏 "+computer;
 
-    coins+=80;
+  if(player > computer){
 
-    document.getElementById("cardResult").textContent=
-    "🎉 Bạn thắng +80 xu ảo";
+    coins += 80;
 
-    addHistory("🃏 Thắng +80 xu");
+    document.getElementById("cardResult").textContent =
+      "🎉 Bạn thắng! +80 xu ảo";
 
-  }else if(player===bot){
+    addHistory("🃏 Đánh bài: +80 xu");
 
-    coins+=30;
+  }else if(player === computer){
 
-    document.getElementById("cardResult").textContent=
-    "🤝 Hòa";
+    coins += 30;
 
-    addHistory("🃏 Hòa");
+    document.getElementById("cardResult").textContent =
+      "🤝 Hòa.";
+
+    addHistory("🃏 Đánh bài: Hòa");
 
   }else{
 
-    document.getElementById("cardResult").textContent=
-    "😢 Bạn thua -30 xu ảo";
+    document.getElementById("cardResult").textContent =
+      "😢 Bạn thua. -30 xu ảo";
 
-    addHistory("🃏 Thua -30 xu");
+    addHistory("🃏 Đánh bài: -30 xu");
 
   }
 
-  update();
+  updateCoins();
 }
 
+function miniGame(){
 
-function show(game){
-
-  document.getElementById("slot").style.display=
-    game==="slot" ? "block":"none";
-
-  document.getElementById("card").style.display=
-    game==="card" ? "block":"none";
+  alert("🎯 Mini Game đang được phát triển!");
 }
 
-update();
+function ranking(){
+
+  alert("🏆 Bảng xếp hạng demo đang được phát triển!");
+}
+
+function historyPage(){
+
+  hidePanels();
+
+  document.getElementById("history")
+    .classList.add("active");
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
+}
+
+function profile(){
+
+  alert("👤 Tài khoản demo\n\n💰 Xu hiện tại: "+coins);
+}
+
+updateCoins();
 
 </script>
 
