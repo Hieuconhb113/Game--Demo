@@ -1,47 +1,305 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Demo</title>
-  <style>
-    body {
-      margin: 0;
-      background: #111827;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px 20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game Demo</title>
 
-    .box {
-      max-width: 400px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 20px;
-      background: #1f2937;
-    }
-
-    button {
-      padding: 15px 30px;
-      border: 0;
-      border-radius: 20px;
-      background: #f59e0b;
-      color: white;
-      font-size: 18px;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#080b14;
+  color:#fff;
+  font-family:Arial,sans-serif
+}
+.app{
+  max-width:430px;
+  min-height:100vh;
+  margin:auto;
+  background:linear-gradient(#151a32,#080b14)
+}
+header{
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  background:#171d35
+}
+.logo{font-size:19px;font-weight:bold}
+.coins{
+  color:#ffd43b;
+  background:#252d4b;
+  padding:8px 12px;
+  border-radius:20px
+}
+.banner{
+  margin:15px;
+  padding:22px;
+  text-align:center;
+  border-radius:18px;
+  background:linear-gradient(135deg,#7224ff,#e52b8c)
+}
+.menu{
+  display:flex;
+  gap:10px;
+  padding:0 15px
+}
+.menu button{
+  flex:1;
+  background:#252d49;
+  border:0;
+  color:white;
+  padding:12px 5px;
+  border-radius:12px
+}
+section{padding:15px}
+.card{
+  background:#171d32;
+  border:1px solid #303955;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:15px;
+  text-align:center
+}
+.slots{
+  font-size:48px;
+  background:#090d18;
+  padding:20px 5px;
+  border-radius:15px;
+  margin:15px 0
+}
+button.play{
+  border:0;
+  padding:13px 30px;
+  border-radius:25px;
+  color:#fff;
+  font-size:17px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#f59e0b,#ef4444)
+}
+.result{
+  min-height:25px;
+  margin-top:12px;
+  color:#ffd43b
+}
+.cards{
+  font-size:55px;
+  margin:15px
+}
+.history{
+  text-align:left;
+  font-size:14px;
+  color:#cbd5e1
+}
+nav{
+  position:sticky;
+  bottom:0;
+  display:flex;
+  justify-content:space-around;
+  padding:12px;
+  background:#151b30;
+  border-top:1px solid #303955
+}
+nav div{text-align:center;font-size:13px}
+</style>
 </head>
 
 <body>
 
-  <div class="box">
-    <h1>🎮 GAME DEMO</h1>
-    <p>Trang web đang hoạt động!</p>
-    <button onclick="alert('Game hoạt động!')">
-      CHƠI
-    </button>
-  </div>
+<div class="app">
+
+<header>
+  <div class="logo">🎮 GAME DEMO</div>
+  <div class="coins">💰 <span id="coins">1000</span></div>
+</header>
+
+<div class="banner">
+  <h2>🔥 KHU GAME 🔥</h2>
+  <p>Chơi bằng xu ảo</p>
+</div>
+
+<div class="menu">
+  <button onclick="show('slot')">🎰 Quay hũ</button>
+  <button onclick="show('card')">🃏 Đánh bài</button>
+</div>
+
+<section>
+
+<div class="card" id="slot">
+
+<h2>🎰 QUAY HŨ</h2>
+
+<div class="slots" id="slots">
+🍒 ⭐ 🍋
+</div>
+
+<button class="play" onclick="spin()">
+QUAY
+</button>
+
+<div class="result" id="slotResult"></div>
+
+</div>
+
+
+<div class="card" id="card" style="display:none">
+
+<h2>🃏 ĐÁNH BÀI</h2>
+
+<div class="cards" id="cards">
+🂠 🂠
+</div>
+
+<button class="play" onclick="drawCard()">
+CHIA BÀI
+</button>
+
+<div class="result" id="cardResult"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>📜 LỊCH SỬ</h3>
+
+<div class="history" id="history">
+Chưa có lượt chơi.
+</div>
+
+</div>
+
+</section>
+
+<nav>
+<div>🏠<br>Trang chủ</div>
+<div>🎮<br>Trò chơi</div>
+<div>👤<br>Tài khoản</div>
+</nav>
+
+</div>
+
+
+<script>
+
+let coins=1000;
+
+const symbols=["🍒","🍋","⭐","💎","7️⃣"];
+
+function update(){
+  document.getElementById("coins").textContent=coins;
+}
+
+function addHistory(text){
+
+  const h=document.getElementById("history");
+
+  if(h.textContent==="Chưa có lượt chơi.")
+    h.innerHTML="";
+
+  h.innerHTML="<div>"+text+"</div>"+h.innerHTML;
+}
+
+function spin(){
+
+  if(coins<20){
+    document.getElementById("slotResult").textContent=
+    "Không đủ xu ảo!";
+    return;
+  }
+
+  coins-=20;
+
+  let a=symbols[Math.floor(Math.random()*symbols.length)];
+  let b=symbols[Math.floor(Math.random()*symbols.length)];
+  let c=symbols[Math.floor(Math.random()*symbols.length)];
+
+  document.getElementById("slots").textContent=
+  a+" "+b+" "+c;
+
+  if(a===b && b===c){
+
+    coins+=300;
+
+    document.getElementById("slotResult").textContent=
+    "🎉 JACKPOT! +300 xu ảo";
+
+    addHistory("🎰 Thắng +300 xu");
+
+  }else{
+
+    document.getElementById("slotResult").textContent=
+    "😢 Không trúng -20 xu ảo";
+
+    addHistory("🎰 Thua -20 xu");
+
+  }
+
+  update();
+}
+
+
+function drawCard(){
+
+  if(coins<30){
+
+    document.getElementById("cardResult").textContent=
+    "Không đủ xu ảo!";
+
+    return;
+  }
+
+  coins-=30;
+
+  let player=Math.floor(Math.random()*13)+1;
+  let bot=Math.floor(Math.random()*13)+1;
+
+  document.getElementById("cards").textContent=
+  "🃏 "+player+"   🃏 "+bot;
+
+  if(player>bot){
+
+    coins+=80;
+
+    document.getElementById("cardResult").textContent=
+    "🎉 Bạn thắng +80 xu ảo";
+
+    addHistory("🃏 Thắng +80 xu");
+
+  }else if(player===bot){
+
+    coins+=30;
+
+    document.getElementById("cardResult").textContent=
+    "🤝 Hòa";
+
+    addHistory("🃏 Hòa");
+
+  }else{
+
+    document.getElementById("cardResult").textContent=
+    "😢 Bạn thua -30 xu ảo";
+
+    addHistory("🃏 Thua -30 xu");
+
+  }
+
+  update();
+}
+
+
+function show(game){
+
+  document.getElementById("slot").style.display=
+    game==="slot" ? "block":"none";
+
+  document.getElementById("card").style.display=
+    game==="card" ? "block":"none";
+}
+
+update();
+
+</script>
 
 </body>
 </html>
